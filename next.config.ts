@@ -2,7 +2,6 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   images: {
-    // 👇 update this part — domains is deprecated, use remotePatterns instead
     remotePatterns: [
       {
         protocol: 'https',
@@ -11,10 +10,8 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // 👇 add this to fix nodemailer import in app/api route
-  experimental: {
-    serverComponentsExternalPackages: ['nodemailer'],
-  },
+  // ✅ NEW correct place (NOT experimental)
+  serverExternalPackages: ['nodemailer'],
 }
 
 export default nextConfig
