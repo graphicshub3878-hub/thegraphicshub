@@ -19,11 +19,10 @@ export default function AdminUploadPage() {
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   // ---------------------------------------------------
-  // When category changes, reset subcategory
+  // FIX: When category changes, reset subcategory properly
   // ---------------------------------------------------
   useEffect(() => {
-    const subs = getSubcategories(category)
-    setSubcategory(subs.length > 0 ? null : null)
+    setSubcategory(null)
   }, [category])
 
   const onPick = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +47,10 @@ export default function AdminUploadPage() {
     const fd = new FormData()
 
     fd.append('category', category)
-    if (subcategory) fd.append('subcategory', subcategory)
+
+    // FIX: trim subcategory before sending
+    if (subcategory) fd.append('subcategory', subcategory.trim())
+
     fd.append('altPrefix', altPrefix)
 
     files.forEach(f => fd.append('files', f))
@@ -83,11 +85,7 @@ export default function AdminUploadPage() {
       <h1>Admin — Upload Images</h1>
 
       <form onSubmit={onSubmit}>
-        {/* ------------------------------------------- */}
-        {/* CATEGORY + SUBCATEGORY ROW */}
-        {/* ------------------------------------------- */}
         <div className="row">
-          {/* Category */}
           <label>
             Category
             <select
@@ -104,7 +102,6 @@ export default function AdminUploadPage() {
             </select>
           </label>
 
-          {/* Subcategory */}
           <label>
             Subcategory (optional)
             <select
@@ -123,7 +120,6 @@ export default function AdminUploadPage() {
             </select>
           </label>
 
-          {/* Alt prefix */}
           <label>
             Alt prefix (optional)
             <input
@@ -134,9 +130,6 @@ export default function AdminUploadPage() {
           </label>
         </div>
 
-        {/* ------------------------------------------- */}
-        {/* DRAG & DROP */}
-        {/* ------------------------------------------- */}
         <div
           className="drop"
           onDragOver={e => e.preventDefault()}
@@ -147,16 +140,13 @@ export default function AdminUploadPage() {
           <input
             ref={inputRef}
             type="file"
-           accept="image/*,video/*"
+            accept="image/*,video/*"
             multiple
             hidden
             onChange={onPick}
           />
         </div>
 
-        {/* ------------------------------------------- */}
-        {/* FILE LIST */}
-        {/* ------------------------------------------- */}
         {files.length > 0 && (
           <>
             <div className="summary">
@@ -182,9 +172,6 @@ export default function AdminUploadPage() {
           </>
         )}
 
-        {/* ------------------------------------------- */}
-        {/* SUBMIT BUTTON */}
-        {/* ------------------------------------------- */}
         <button
           className="submit"
           disabled={busy || files.length === 0}
@@ -197,9 +184,6 @@ export default function AdminUploadPage() {
         </button>
       </form>
 
-      {/* ------------------------------------------- */}
-      {/* ORIGINAL STYLES (UNTOUCHED) */}
-      {/* ------------------------------------------- */}
       <style jsx>{`
         .wrap {
           max-width: 900px;
@@ -207,25 +191,21 @@ export default function AdminUploadPage() {
           padding: 0 16px 40px;
           color: #e9c572;
         }
-
         h1 {
           margin: 0 0 16px;
         }
-
         form {
           background: #0f0f0f;
           border: 1px solid #3a2b10;
           border-radius: 12px;
           padding: 16px;
         }
-
         .row {
           display: flex;
           gap: 16px;
           flex-wrap: wrap;
           margin-bottom: 12px;
         }
-
         label {
           display: flex;
           flex-direction: column;
@@ -234,7 +214,6 @@ export default function AdminUploadPage() {
           flex: 1;
           min-width: 200px;
         }
-
         select,
         input {
           background: #131313;
@@ -244,7 +223,6 @@ export default function AdminUploadPage() {
           padding: 8px 10px;
           font-size: 14px;
         }
-
         .drop {
           margin: 14px 0;
           padding: 24px;
@@ -254,14 +232,12 @@ export default function AdminUploadPage() {
           cursor: pointer;
           background: #111;
         }
-
         .summary {
           display: flex;
           justify-content: space-between;
           font-size: 13px;
           margin-bottom: 6px;
         }
-
         .list {
           list-style: none;
           padding: 0;
@@ -269,7 +245,6 @@ export default function AdminUploadPage() {
           display: grid;
           gap: 8px;
         }
-
         .list li {
           display: flex;
           justify-content: space-between;
@@ -280,7 +255,6 @@ export default function AdminUploadPage() {
           padding: 8px 10px;
           color: #ddd;
         }
-
         .submit {
           margin-top: 10px;
           padding: 10px 14px;
