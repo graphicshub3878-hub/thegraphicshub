@@ -72,15 +72,15 @@ export default function Abouthero() {
           text-align: center;
           margin: 0 0 60px;
           letter-spacing: 0.5px;
-          color: rgba(255, 255, 255, 0.85);
+          color: #fff;
         }
 
         .script {
           color: #ffd700;
           font-family: 'Corinthia', serif;
-          font-size: clamp(3rem, 4vw, 5rem);
+          font-size: clamp(3rem, 9vw, 9rem);
           font-weight: 500;
-          margin-left: -15px;
+          margin-left: -40px;
         }
 
         .grid {

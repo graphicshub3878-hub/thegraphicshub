@@ -43,8 +43,8 @@ const NarrativeSection = () => {
         .narrative {
           position: relative;
           width: 100%;
-          max-width: 100vw; /* ✅ Never exceed screen width */
-          overflow-x: hidden; /* ✅ Prevent horizontal scroll */
+          max-width: 100vw; 
+          overflow-x: hidden; 
           background: #000;
           color: #fff;
           display: flex;
@@ -82,9 +82,9 @@ const NarrativeSection = () => {
         .highlight {
           color: #ffd700;
           font-family: 'Corinthia' , serif;
-       font-size: clamp(3rem, 4vw, 5rem);
+       font-size: clamp(3rem, 8vw, 9rem);
           font-weight: 500;
-          margin-left: -15px;
+          margin-left: max(-35px, -3vw);
         }
 
         .narrative__desc {

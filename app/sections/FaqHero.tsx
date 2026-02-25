@@ -70,14 +70,14 @@ export default function FaqHeroExact({
           font-size: clamp(2.4rem, 5vw, 4rem);
           line-height: 1.05;
           letter-spacing: 0.5px;
-          color: rgba(255, 255, 255, 0.85);
+          color: #fff;
           text-align: left;
           max-width: 18ch;
         }
         .highlight {
           color: #ffd700;
           font-family: 'Corinthia', serif;
-          font-size: clamp(3rem, 4vw, 5rem);
+          font-size: clamp(3rem, 7vw, 7rem);
           font-weight: 500;
           margin-left: -10px;
           display: inline-block;

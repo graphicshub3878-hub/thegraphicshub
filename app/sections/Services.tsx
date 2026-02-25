@@ -373,9 +373,10 @@ export default function ServicesPage() {
         .title span {
           color: #ffd700;
           font-family: 'Corinthia', serif;
-          font-size: clamp(3rem, 4vw, 5rem);
+          font-size: clamp(3rem, 7vw, 9rem);
           font-weight: 500;
-          margin-left: -15px;
+          // margin-left: -20px;
+          margin-left: max(-20px, -1vw);
         }
         .catWrap {
           position: relative;

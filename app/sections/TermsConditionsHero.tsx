@@ -26,7 +26,7 @@ export default function TermsConditionsHeroExact({
           padding: '0 80px',
           minHeight: '70vh',
           display: 'flex',
-          flexDirection: 'row', // desktop: side-by-side
+          flexDirection: 'row', 
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: '40px',
@@ -41,7 +41,7 @@ export default function TermsConditionsHeroExact({
             fontSize: 'clamp(2.4rem, 5vw, 4rem)',
             lineHeight: 1.05,
             letterSpacing: '.5px',
-            color: 'rgba(255,255,255,0.85)',
+            color: '#ffffff',
             margin: 0,
             flex: 1,
             textAlign: 'left',
@@ -52,7 +52,7 @@ export default function TermsConditionsHeroExact({
             style={{
               color: '#FFD700',
               fontFamily: "'Corinthia', serif",
-              fontSize: 'clamp(3rem, 4vw, 5rem)',
+              fontSize: 'clamp(3rem, 7vw, 7rem)',
               fontWeight: 500,
               marginLeft: '-10px',
             }}

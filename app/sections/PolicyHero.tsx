@@ -74,13 +74,13 @@ export default function PrivacyPolicyHeroExact({
           font-size: clamp(2.6rem, 6vw, 4rem);
           line-height: 1.05;
           letter-spacing: 0.5px;
-          color: rgba(255, 255, 255, 0.85);
+          color: #fff;
           max-width: 18ch;
         }
         .highlight {
           color: #ffd700;
           font-family: 'Corinthia', serif;
-          font-size: clamp(3rem, 4vw, 5rem);
+          font-size: clamp(3rem, 7vw, 7rem);
           font-weight: 500;
           margin-left: 2px;
           display: inline-block;

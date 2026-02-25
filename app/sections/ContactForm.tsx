@@ -104,9 +104,9 @@ export default function ContactUs() {
         :root { --teal:#018175; --beige:#f0e1c0; --dark:#0a0a0a; }
         .page { background:var(--dark); color:#fff; font-family:'Arima',sans-serif; padding:150px 16px 110px; }
         .head { text-align:center; margin-bottom:28px; }
-        .big { font-family:'Arima',serif; font-weight:700; font-size:clamp(2.6rem,6vw,4rem); color:rgba(255,255,255,.85); margin:0 0 10px; }
-        .big span { color:#ffd700; font-family:'Corinthia',serif; font-size:clamp(3rem,4vw,5rem); font-weight:500; margin-left:-15px; }
-        .sub { font-family:'Arima',serif; color:#ffd700; font-size:clamp(1.4rem,2.6vw,2rem); margin:0 0 6px; }
+        .big { font-family:'Arima',serif; font-weight:700; font-size:clamp(2.6rem,6vw,4rem); color: #fff; margin:0 0 10px; }
+        .big span { color:#ffd700; font-family:'Corinthia',serif; font-size:clamp(3rem,9vw,9rem); font-weight:500; margin-left:-38px; }
+        .sub { font-family:'Arima',serif; color:#ffd700; font-size:clamp(1.4rem,2.6vw,2rem); margin:0 0 2px; }
         .subdesc { font-family:'Arima',serif; color:#cfd3db; opacity:.9; margin:0; }
         .container { width:92%; max-width:1220px; margin:30px auto 0; display:grid; grid-template-columns:1fr 1.05fr; gap:40px; align-items:stretch; }
         .photoCard { position:relative; width:100%; height:100%; min-height:420px; border-radius:20px; box-shadow:0 18px 40px rgba(0,0,0,.45); overflow:hidden; }

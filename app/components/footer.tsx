@@ -335,18 +335,21 @@ export default function Footer() {
   </div>
 
   <p
-    style={{
-      color: '#999',
-      fontSize: isMobile ? '12px' : '13.5px',
-      lineHeight: '1.9',
-      fontStyle: 'italic',
-      fontWeight: 300,
-    }}
-  >
-    "Graphics Hub" is your one-stop solution for stunning visual experiences. We specialize in
-    creating captivating designs for social media, websites, branding, 3D, interiors, exteriors, & print
-    materials. Let us elevate your brand with our expertise.
-  </p>
+  style={{
+    color: '#999',
+    fontSize: isMobile ? '12px' : '13.5px',
+    lineHeight: '1.9',
+    fontStyle: 'italic',
+    fontWeight: 300,
+  }}
+>
+  <span style={{ fontWeight: 700, color: '#999' }}>
+    "Graphics Hub"
+  </span>{' '}
+  is your one-stop solution for stunning visual experiences. We specialize in
+  creating captivating designs for social media, websites, branding, 3D, interiors, exteriors, & print
+  materials. Let us elevate your brand with our expertise.
+</p>
 </div>
 
         </div>
@@ -374,7 +377,7 @@ export default function Footer() {
             lineHeight: '1.6',
           }}
         >
-          © 2025 – All Rights Reserved.{' '}
+          © 2026 – All Rights Reserved.{' '}
           <span style={{ color: '#d4af37', fontWeight: 600 }}>Graphics Hub.</span>
         </div>
       </div>

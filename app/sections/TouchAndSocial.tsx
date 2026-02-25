@@ -126,7 +126,7 @@ export default function TouchAndSocial() {
           margin-top: 6px;
           margin-bottom: 10px;
           flex-wrap: wrap;
-          min-height: 60px; /* prevents slight jump on hover */
+          min-height: 60px; 
         }
 
         /* ====== Get in Touch buttons ====== */
@@ -180,7 +180,11 @@ export default function TouchAndSocial() {
           transform: translate(-50%, -50%);
         }
 
-        .sign svg { width: 20px; fill: #fff; }
+        .sign svg { 
+  width: 25px; 
+  height: 25px; 
+  fill: #fff; 
+}
 
         .text {
           opacity: 0;
