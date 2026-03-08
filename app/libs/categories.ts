@@ -4,6 +4,7 @@
 export const CATEGORY_LABELS = [
   'AI',
   'Animation',
+  'Banners',
   'Branding',
   'Cards',
   'Character Design',
@@ -35,6 +36,7 @@ export type CategoryLabel = typeof CATEGORY_LABELS[number];
 export type CategoryCode =
   | 'AI'
   | 'ANIMATION'
+  |  'BANNERS'
   | 'BRANDING'
   | 'CARDS'
   | 'CHARACTER_DESIGN'
@@ -63,6 +65,7 @@ export type CategoryCode =
 export const LABEL_TO_CODE: Record<CategoryLabel, CategoryCode> = {
   'AI': 'AI',
   'Animation': 'ANIMATION',
+  'Banners': 'BANNERS',
   'Branding': 'BRANDING',
   'Cards': 'CARDS',
   'Character Design': 'CHARACTER_DESIGN',
@@ -108,9 +111,11 @@ export const SUBCATEGORIES: Record<CategoryCode, string[]> = {
 
   ANIMATION: ['2D Animation', '3D Animation', 'Animated Videos', 'Motion Graphics'],
 
+  BANNERS: [],
+
   BRANDING: ['Brand Guidelines', 'Brand Identity', 'Strategy'],
 
-  CARDS: ['Business', 'Greeting', 'Id cards', 'Invitation', 'menu cards'],
+  CARDS: ['Business', 'Greeting', 'Id Cards', 'Invitation', 'Menu Cards'],
 
   CHARACTER_DESIGN: ['3D Characters', 'Cartoon', 'Mascots'],
 
@@ -136,15 +141,15 @@ export const SUBCATEGORIES: Record<CategoryCode, string[]> = {
 
   MOCKUPS: ['Branding Mockups', 'Product Mockups', 'UI Mockups'],
 
-  PRINT_MEDIA: ['Brochure', 'Calendars', 'Flyer', 'Media wall/Backdrop', 'Poster', 'magazines'],
+  PRINT_MEDIA: ['Brochure', 'Calendars', 'Flyer', 'Media Wall / Backdrop', 'Poster', 'Magazines'],
 
-  PRODUCT_PACKAGING: ['Bottle Packaging', 'Box Design', 'Pouch Design'],
+  PRODUCT_PACKAGING: ['Bottle Packaging', 'Box Design', 'Pouch Design', 'Cans / Tins'],
 
   SILHOUETTES: [],
 
   SOCIAL_MEDIA: ['Carousel', 'Posts', 'Reels', 'Stories'],
 
-  STATIONARY: ['Business Card', 'Envelope', 'Letterhead', 'Merchandise'],
+  STATIONARY: ['Business Card', 'Envelope', 'Letterhead', 'Invoice', 'Merchandise'],
 
   TYPOGRAPHY: ['Arabic', 'English', 'Urdu'],
 
@@ -160,7 +165,7 @@ export const SUBCATEGORIES: Record<CategoryCode, string[]> = {
     'Explainer Videos',
     'Short Form',
     'Talking Heads',
-    'vlogs',
+    'Vlogs',
   ],
 };
 

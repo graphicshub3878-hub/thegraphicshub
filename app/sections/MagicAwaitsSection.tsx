@@ -46,7 +46,7 @@ export default function MagicAwaitsSection() {
             style={{
               fontFamily: 'Arima, serif',
               fontWeight: 700,
-              color: '#F0C64A',
+              color: '#ffd700',
               fontSize: 'clamp(2rem, 4vw, 2.6rem)',
               letterSpacing: '.3px',
               margin: '0 0 14px',

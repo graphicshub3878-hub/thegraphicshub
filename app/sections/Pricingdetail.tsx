@@ -1,6 +1,7 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 
 type Plan = {
   name: string
@@ -58,13 +59,82 @@ const DEFAULT_PLANS: Plan[] = [
   },
 ]
 
+function useCountUp(target: number, start: boolean, duration = 1800) {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    if (!start) return
+
+    let frameId = 0
+    let startTime: number | null = null
+
+    const animate = (timestamp: number) => {
+      if (startTime === null) startTime = timestamp
+      const progress = Math.min((timestamp - startTime) / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 3)
+      const current = Math.round(target * eased)
+
+      setCount(current)
+
+      if (progress < 1) {
+        frameId = window.requestAnimationFrame(animate)
+      }
+    }
+
+    frameId = window.requestAnimationFrame(animate)
+
+    return () => window.cancelAnimationFrame(frameId)
+  }, [start, target, duration])
+
+  return count
+}
+
 export default function PricingSection() {
   const router = useRouter()
+  const statsRef = useRef<HTMLDivElement | null>(null)
+  const downloadResetRef = useRef<number | null>(null)
 
-  // ✅ route to /contact
+  const [startCounting, setStartCounting] = useState(false)
+  const [isDownloading, setIsDownloading] = useState(false)
+
+  const projectsCount = useCountUp(1000, startCounting, 2000)
+  const satisfactionCount = useCountUp(98, startCounting, 1800)
+
+  useEffect(() => {
+    const node = statsRef.current
+    if (!node) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        if (entry?.isIntersecting) {
+          setStartCounting(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.35 }
+    )
+
+    observer.observe(node)
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      if (downloadResetRef.current) {
+        window.clearTimeout(downloadResetRef.current)
+      }
+    }
+  }, [])
+
   const handleClick = () => router.push('/contact-us')
 
   const handleDownloadPdf = () => {
+    if (isDownloading) return
+
+    setIsDownloading(true)
+
     const pdfUrl = '/assets/PriceList.pdf'
     const fileName = 'GraphicsHubPriceList.pdf'
 
@@ -74,9 +144,12 @@ export default function PricingSection() {
     document.body.appendChild(a)
     a.click()
     a.remove()
+
+    downloadResetRef.current = window.setTimeout(() => {
+      setIsDownloading(false)
+    }, 1800)
   }
 
-  // ✅ keyboard support (Enter/Space)
   const handlePillKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
@@ -84,27 +157,42 @@ export default function PricingSection() {
     }
   }
 
+  const projectLabel = useMemo(() => `${projectsCount.toLocaleString()}+`, [projectsCount])
+  const satisfactionLabel = useMemo(() => `${satisfactionCount}%`, [satisfactionCount])
+
   return (
     <section className="pricing" id="pricing">
       <div className="glow" aria-hidden />
 
       <div className="wrap">
-        {/* Top pill (downloads PDF) */}
         <div
-          className="topPill"
+          className={`topPill ${isDownloading ? 'isDownloading' : ''}`}
           role="button"
           tabIndex={0}
           aria-label="Download the Mystic Manuscripts PDF"
           onClick={handleDownloadPdf}
           onKeyDown={handlePillKeyDown}
         >
-          <span className="pillIcon" aria-hidden>
-            ⭳
-          </span>
-          <span className="pillText">The Mystic Manuscripts</span>
+          <div className="pillInner">
+            {!isDownloading ? (
+              <>
+                <span className="pillIcon" aria-hidden>
+                  ⭳
+                </span>
+                <span className="pillText">The Mystic Manuscripts</span>
+              </>
+            ) : (
+              <div className="pillAnimation" aria-hidden>
+                <DotLottieReact
+                  src="/assets/videos/Downloadicon.lottie"
+                  autoplay
+                  loop={false}
+                />
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Headings */}
         <h2 className="heroTitle">
           Chronicles of<span className="heroGold">Craft</span>
         </h2>
@@ -113,11 +201,10 @@ export default function PricingSection() {
           Choose the perfect package for your business. From stunning logos to complete brand identities.
         </p>
         <p className="heroMini">
-          All packages include professional design work by experienced designers, multiple revisions, and high-quality
+          All packages include professional design work by experienced designers, multiple revisions, & high-quality
           deliverables.
         </p>
 
-        {/* Cards */}
         <div className="grid" aria-label="Pricing plans">
           {DEFAULT_PLANS.map((p) => (
             <article key={p.name} className={`card ${p.highlighted ? 'highlighted' : ''}`} aria-label={`${p.name} plan`}>
@@ -154,7 +241,6 @@ export default function PricingSection() {
           ))}
         </div>
 
-        {/* Button under cards */}
         <div className="wpforms-submit-container center">
           <button
             type="button"
@@ -165,15 +251,14 @@ export default function PricingSection() {
           />
         </div>
 
-        {/* Stats bar */}
-        <div className="stats" aria-label="Company stats">
+        <div className="stats" aria-label="Company stats" ref={statsRef}>
           <div className="stat">
-            <div className="statNum">1000+</div>
+            <div className="statNum">{projectLabel}</div>
             <div className="statLab">Projects Completed</div>
           </div>
           <div className="divider" aria-hidden />
           <div className="stat">
-            <div className="statNum">98%</div>
+            <div className="statNum">{satisfactionLabel}</div>
             <div className="statLab">Client Satisfaction</div>
           </div>
           <div className="divider" aria-hidden />
@@ -217,12 +302,12 @@ export default function PricingSection() {
           text-align: center;
         }
 
-        /* ===== top pill ===== */
         .topPill {
           display: inline-flex;
           align-items: center;
-          gap: 10px;
-          padding: 10px 16px;
+          justify-content: center;
+          width: 360px;
+          height: 64px;
           border-radius: 999px;
           border: 1px solid rgba(255, 210, 119, 0.45);
           background: rgba(0, 0, 0, 0.25);
@@ -231,57 +316,96 @@ export default function PricingSection() {
           cursor: pointer;
           user-select: none;
           margin: 0 auto 26px;
-          transition: transform 0.15s ease, border-color 0.15s ease;
+          transition:
+            transform 0.2s ease,
+            border-color 0.2s ease,
+            width 0.45s ease,
+            border-radius 0.45s ease,
+            background 0.3s ease;
+          overflow: hidden;
         }
+
         .topPill:hover {
           transform: translateY(-1px);
           border-color: rgba(255, 210, 119, 0.7);
         }
+
         .topPill:focus-visible {
           outline: 2px solid rgba(255, 210, 119, 0.65);
           outline-offset: 4px;
         }
+
+        .topPill.isDownloading {
+          width: 72px;
+          border-radius: 999px;
+          border-color: rgba(255, 210, 119, 0.8);
+          background: rgba(255, 210, 119, 0.08);
+        }
+
+        .pillInner {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          padding: 0 22px;
+        }
+
         .pillIcon {
           color: #ffd277;
           font-weight: 800;
           opacity: 0.95;
+          font-size: 18px;
+          line-height: 1;
         }
+
         .pillText {
           color: #ffd277;
           font-weight: 800;
-          font-size: 13px;
+          font-size: 15px;
           letter-spacing: 0.02em;
+          white-space: nowrap;
         }
 
-        /* ===== headings ===== */
+        .pillAnimation {
+          width: 38px;
+          height: 38px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .pillAnimation :global(canvas),
+        .pillAnimation :global(svg) {
+          width: 38px !important;
+          height: 38px !important;
+        }
+
         .heroTitle {
-          font-family: 'Arima', serif;
-          font-weight: 700;
-          font-size: clamp(2.6rem, 6vw, 4rem);
-          line-height: 1.05;
           text-align: center;
-          margin: 0 0 18px;
-          letter-spacing: 0.5px;
+          font-size: 3rem;
+          font-weight: 700;
+          font-family: 'Arima', serif;
           color: #fff;
+          margin-bottom: 10px;
         }
 
         .heroGold {
           color: #ffd700;
           font-family: 'Corinthia', serif;
+          font-size: clamp(3rem, 9vw, 9rem);
           font-weight: 500;
-          font-size: clamp(2.6rem, 7vw, 7rem);
-          text-shadow: 0 0 18px rgba(255, 215, 0, 0.16);
-          margin-left: -6px;
-          display: inline-block;
         }
 
         .heroSub {
           margin: 10px auto 0;
-          max-width: 68ch;
+          max-width: 70ch;
           color: rgba(255, 255, 255, 0.72);
           font-size: clamp(1rem, 1.2vw, 1.25rem);
           line-height: 1.55;
         }
+
         .heroMini {
           margin: 14px auto 0;
           max-width: 86ch;
@@ -290,7 +414,6 @@ export default function PricingSection() {
           line-height: 1.55;
         }
 
-        /* ===== cards grid ===== */
         .grid {
           margin-top: 54px;
           display: grid;
@@ -308,7 +431,6 @@ export default function PricingSection() {
           box-shadow: 0 22px 80px rgba(0, 0, 0, 0.55);
           padding: 26px 24px 26px;
           overflow: hidden;
-
           display: flex;
           flex-direction: column;
           height: 100%;
@@ -328,7 +450,6 @@ export default function PricingSection() {
           opacity: 0.8;
         }
 
-        /* ✅ Middle card: animated gradient stroke like your button */
         .highlighted {
           position: relative;
           border: 2px solid transparent;
@@ -352,11 +473,9 @@ export default function PricingSection() {
           background: linear-gradient(to right, #77530a, #ffd277, #77530a, #77530a, #ffd277, #77530a);
           background-size: 200%;
           background-position: left;
-
           -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
           -webkit-mask-composite: xor;
           mask-composite: exclude;
-
           pointer-events: none;
           transition: background-position 1s;
           z-index: 1;
@@ -383,6 +502,7 @@ export default function PricingSection() {
           box-shadow: 0 16px 40px rgba(255, 215, 0, 0.22);
           z-index: 3;
         }
+
         .spark {
           font-size: 13px;
         }
@@ -439,7 +559,6 @@ export default function PricingSection() {
           list-style: none;
           display: grid;
           gap: 14px;
-
           flex: 1;
           align-content: start;
         }
@@ -467,12 +586,12 @@ export default function PricingSection() {
           margin-top: 1px;
         }
 
-        /* ✅ button styles */
         .wpforms-submit-container.center {
           display: flex;
           justify-content: center;
           margin-top: 40px;
         }
+
         .wpforms-submit {
           width: 160px;
           height: 44px;
@@ -491,6 +610,7 @@ export default function PricingSection() {
           transition: background-position 1s;
           overflow: hidden;
         }
+
         .wpforms-submit::before {
           position: absolute;
           content: attr(data-label);
@@ -506,14 +626,15 @@ export default function PricingSection() {
           background-position: left;
           transition: background-position 1s;
         }
+
         .wpforms-submit:hover {
           background-position: right;
         }
+
         .wpforms-submit:hover::before {
           background-position: right;
         }
 
-        /* ===== stats ===== */
         .stats {
           margin: 64px auto 0;
           max-width: 980px;
@@ -535,18 +656,19 @@ export default function PricingSection() {
           color: #ffd700;
           text-shadow: 0 0 18px rgba(255, 215, 0, 0.12);
         }
+
         .statLab {
           margin-top: 8px;
           font-size: 13px;
           color: rgba(255, 255, 255, 0.6);
         }
+
         .divider {
           width: 1px;
           height: 42px;
           background: rgba(255, 255, 255, 0.12);
         }
 
-        /* ===== responsive ===== */
         @media (max-width: 1100px) {
           .grid {
             grid-template-columns: 1fr;
@@ -554,16 +676,20 @@ export default function PricingSection() {
             margin-left: auto;
             margin-right: auto;
           }
+
           .highlighted {
             transform: none;
           }
+
           .stats {
             grid-template-columns: 1fr;
             gap: 14px;
           }
+
           .divider {
             display: none;
           }
+
           .wpforms-submit {
             width: min(520px, 100%);
           }
@@ -573,26 +699,46 @@ export default function PricingSection() {
           .pricing {
             padding: 110px 0 80px;
           }
+
+          .topPill {
+            width: min(100%, 320px);
+            height: 58px;
+          }
+
+          .topPill.isDownloading {
+            width: 66px;
+          }
+
+          .pillText {
+            font-size: 14px;
+          }
+
           .heroMini {
             font-size: 12.5px;
           }
+
           .grid {
             margin-top: 36px;
           }
+
           .card {
             padding: 22px 18px 22px;
             border-radius: 16px;
           }
+
           .highlighted,
           .highlighted::after {
             border-radius: 16px;
           }
+
           .price {
             font-size: 42px;
           }
+
           .item {
             font-size: 13px;
           }
+
           .stats {
             margin-top: 44px;
             padding: 26px 14px;

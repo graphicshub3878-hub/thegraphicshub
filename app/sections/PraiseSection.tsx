@@ -12,11 +12,11 @@ type Testimonial = {
 }
 
 const testimonials: Testimonial[] = [
-  { name: 'MCT Collection', review: "We've collaborated on multiple projects — always a pleasure. Their speed, creativity & professionalism are unmatched.", author: '– MCT', project: 'Logo Design', rating: 5, img: '/sample-card.jpg' },
-  { name: 'Sweet VAJ', review: 'They understood my vision perfectly. Delivered exactly what I needed — polished, timely, and aesthetic.', author: '– Aajayi', project: 'Branding', rating: 5, img: '/sample-card.jpg' },
-  { name: 'Travel Diva', review: 'Flawless communication & execution! They turned my idea into a brand identity that truly represents me.', author: '– Tomeka Gilmer', project: 'Logo Design', rating: 5, img: '/sample-card.jpg' },
-  { name: 'The Luxe Edit', review: 'From logos to product shots — every detail was handled with perfection. You guys truly make design feel like magic.', author: '– Huda', project: 'Complete Branding Kit', rating: 5, img: '/sample-card.jpg' },
-  { name: 'Bloom Studios', review: 'Highly professional & creative. Loved how they transformed our dull visuals into a premium brand identity!', author: '– Zara Malik', project: 'Rebranding & Print', rating: 5, img: '/sample-card.jpg' },
+  { name: 'By Rida', review: "We've collaborated on multiple projects — always a pleasure. Their speed, creativity & professionalism are unmatched.", author: '– Rida', project: 'Logo Design', rating: 5, img: '/assets/images/rida.webp' },
+  { name: 'Sweet VAJ', review: 'They understood my vision perfectly. Delivered exactly what I needed — polished, timely, and aesthetic.', author: '– Aajayi', project: 'Branding', rating: 5, img: '/assets/images/sweet.webp' },
+  { name: 'Travel Diva', review: 'Flawless communication & execution! They turned my idea into a brand identity that truly represents me.', author: '– Tomeka Gilmer', project: 'Logo Design', rating: 5, img: '/assets/images/travel.webp' },
+  { name: 'The Luxe Edit', review: 'From logos to product shots — every detail was handled with perfection. You guys truly make design feel like magic.', author: '– gilmer', project: 'Complete Branding Kit', rating: 5, img: '/assets/images/gilmer.webp' },
+  { name: 'All Inspired Soul', review: 'Highly professional & creative. Loved how they transformed our dull visuals into a premium brand identity!', author: '– Zara Malik', project: 'Rebranding & Print', rating: 5, img: '/assets/images/inspiredsoul.webp' },
 ]
 
 export default function PraiseSection() {
@@ -433,12 +433,12 @@ font-family: 'Arima', sans-serif;
         .hexagon {
           width: 108px;
           height: 108px;
-          background: linear-gradient(145deg, #77530a, #ffd277);
-          clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+          // background: linear-gradient(145deg, #77530a, #ffd277);
+          // clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
           margin: 0 auto 16px;
           display: grid;
           place-items: center;
-          box-shadow: 0 0 18px rgba(255, 215, 0, 0.25);
+          // box-shadow: 0 0 18px rgba(255, 215, 0, 0.25);
         }
         .hex {
           clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
@@ -448,6 +448,7 @@ font-family: 'Arima', sans-serif;
         }
 
         .card-title {
+          font-family: 'arima';
           font-size: 1.12rem;
           font-weight: 700;
           letter-spacing: 0.3px;
@@ -458,7 +459,7 @@ font-family: 'Arima', sans-serif;
           margin: 10px 0 8px;
           line-height: 1.6;
         }
-        .author { color: #ffd700; font-weight: 600; margin-top: 8px; }
+        .author { color: #ffd700; font-weight: 600; margin-top: 8px;  }
         .project { color: #b9b9b9; font-size: 0.92rem; }
         .stars { color: #ffd700; font-size: 1.02rem; margin-top: 8px; letter-spacing: 1px; }
 

@@ -23,7 +23,7 @@ export default function VisionMissionSection() {
             style={{
               fontFamily: 'Arima, serif',
               fontWeight: 700,
-              color: '#F0C64A',
+              color: '#ffd700',
               textAlign: 'center',
               fontSize: 'clamp(2rem, 3.4vw, 2.4rem)',
               margin: '0 0 18px',
@@ -84,7 +84,7 @@ export default function VisionMissionSection() {
             style={{
               fontFamily: 'Arima, serif',
               fontWeight: 700,
-              color: '#F0C64A',
+              color: '#ffd700',
               textAlign: 'center',
               fontSize: 'clamp(2rem, 3.4vw, 2.4rem)',
               margin: '0 0 18px',

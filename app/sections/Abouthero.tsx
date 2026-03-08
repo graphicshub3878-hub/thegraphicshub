@@ -18,7 +18,7 @@ export default function Abouthero() {
           {/* LEFT TEXT SECTION */}
           <div className="left">
             <div className="left-inner">
-              <p className="lead">Welcome to Graphics Hub – Where Creativity Meets Magic!</p>
+              <p className="lead">Welcome to Graphics Hub, Where Creativity Meets Magic!</p>
 
               <p className="para">
                 At Graphics Hub, we bring visions to life with a touch of enchantment. From mesmerizing interiors &amp; exteriors to captivating UI/UX
@@ -113,7 +113,7 @@ export default function Abouthero() {
           font-family: 'Arima', sans-serif;
           line-height: 1.8;
           font-size: clamp(0.95rem, 1.1vw, 1.05rem);
-          color: #d7d7d7;
+          color: #ffd700;
           font-weight: 600;
           margin: 0;
         }

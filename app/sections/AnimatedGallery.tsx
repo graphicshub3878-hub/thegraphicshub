@@ -87,7 +87,7 @@ export default function InfiniteGallery({
           font-size: clamp(3rem, 7vw, 9rem);
           font-weight: 500;
           // margin-left: -15px;
-          margin-left: max(-35px, -2vw);
+          margin-left: max(-5px, -2vw);
         }
 
         .gallery {
