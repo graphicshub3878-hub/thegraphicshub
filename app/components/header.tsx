@@ -1,51 +1,76 @@
 'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { usePathname } from 'next/navigation'
 
-type NavItem = { label: string; href: string }
+type NavItem = {
+  label: string
+  href: string
+}
 
 const Header = () => {
   const pathname = usePathname() || '/'
   const [menuOpen, setMenuOpen] = useState(false)
 
   // Close menu whenever route changes
-  useEffect(() => setMenuOpen(false), [pathname])
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
 
   // Prevent body scroll when menu is open
   useEffect(() => {
     if (!menuOpen) return
+
     const prev = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = prev }
+
+    return () => {
+      document.body.style.overflow = prev
+    }
   }, [menuOpen])
 
-  // Close on Escape
+  // Close menu on Escape
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenuOpen(false)
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMenuOpen(false)
+      }
+    }
+
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+
+    return () => {
+      window.removeEventListener('keydown', onKey)
+    }
   }, [])
 
   const nav: NavItem[] = useMemo(
     () => [
-      { label: 'Home',       href: '/' },
-      { label: 'About Us',   href: '/about-us' },
-      { label: 'Gallery',    href: '/gallery' },
-      { label: 'Services',   href: '/services' },
+      { label: 'Home', href: '/' },
+      { label: 'About Us', href: '/about-us' },
+      { label: 'Porfolio', href: '/gallery' },
+      // { label: 'Services', href: '/services' },
       { label: 'Pricing', href: '/pricing' },
       { label: 'Contact Us', href: '/contact-us' },
     ],
     []
   )
 
-  // ——— Active helpers (handles trailing slashes)
-  const normalize = (p: string) => (p === '/' ? '/' : p.replace(/\/+$/, '') || '/')
+  // Handles trailing slashes
+  const normalize = (p: string) => {
+    return p === '/' ? '/' : p.replace(/\/+$/, '') || '/'
+  }
+
   const isActive = (href: string) => {
     const cur = normalize(pathname)
     const target = normalize(href)
-    if (target === '/') return cur === '/'
+
+    if (target === '/') {
+      return cur === '/'
+    }
+
     return cur === target || cur.startsWith(`${target}/`)
   }
 
@@ -54,12 +79,16 @@ const Header = () => {
       {/* Logo */}
       <Link href="/" className="gh-logo" aria-label="Graphics Hub — Home">
         <Image
+          className="gh-logo-image"
           src="/assets/images/Logo.png"
           alt="Graphics Hub Logo"
           width={220}
           height={64}
           priority
-          style={{ objectFit: 'contain', height: 'auto' }}
+          style={{
+            objectFit: 'contain',
+            height: 'auto',
+          }}
         />
       </Link>
 
@@ -67,6 +96,7 @@ const Header = () => {
       <nav className="gh-nav-desktop" aria-label="Primary">
         {nav.map(({ label, href }) => {
           const active = isActive(href)
+
           return (
             <Link
               key={href}
@@ -87,7 +117,7 @@ const Header = () => {
         aria-label={menuOpen ? 'Close menu' : 'Open menu'}
         aria-expanded={menuOpen}
         aria-controls="mobile-menu"
-        onClick={() => setMenuOpen(v => !v)}
+        onClick={() => setMenuOpen((v) => !v)}
       >
         <span />
         <span />
@@ -95,7 +125,12 @@ const Header = () => {
       </button>
 
       {/* Overlay */}
-      {menuOpen && <div className="gh-overlay" onClick={() => setMenuOpen(false)} />}
+      {menuOpen && (
+        <div
+          className="gh-overlay"
+          onClick={() => setMenuOpen(false)}
+        />
+      )}
 
       {/* Mobile Drawer */}
       <nav
@@ -105,6 +140,7 @@ const Header = () => {
       >
         {nav.map(({ label, href }) => {
           const active = isActive(href)
+
           return (
             <Link
               key={href}
@@ -121,9 +157,19 @@ const Header = () => {
 
       {/* Styles */}
       <style jsx>{`
-        /* Backstop if global CSS uses !important somewhere */
-        :global(.gh-link.active) { color: #ffd700 !important; }
-        :global(.gh-mobile-link.active) { color: #ffd700 !important; }
+        /* Active nav backstop */
+        :global(.gh-link.active) {
+          color: #ffd700 !important;
+        }
+
+        :global(.gh-mobile-link.active) {
+          color: #ffd700 !important;
+        }
+
+        /* Move the actual PNG slightly upward */
+        :global(.gh-logo-image) {
+          transform: translateY(-5px);
+        }
 
         /* ============ Shell ============ */
         .gh-header {
@@ -153,11 +199,15 @@ const Header = () => {
           border-radius: 10px;
           transition: transform 0.2s ease;
         }
+
         .gh-logo:focus-visible {
           outline: 2px solid #ffd700;
           outline-offset: 4px;
         }
-        .gh-logo:hover { transform: translateY(-1px); }
+
+        .gh-logo:hover {
+          transform: translateY(-1px);
+        }
 
         /* ============ Desktop Nav ============ */
         .gh-nav-desktop {
@@ -165,6 +215,7 @@ const Header = () => {
           align-items: center;
           gap: clamp(16px, 4vw, 36px);
         }
+
         .gh-link {
           position: relative;
           padding: 10px 6px;
@@ -176,14 +227,18 @@ const Header = () => {
           transition: color 0.25s ease;
           font-family: 'Arima', serif;
         }
+
         .gh-link:focus-visible {
           outline: 2px solid #ffd700;
           outline-offset: 6px;
           border-radius: 8px;
         }
+
         .gh-link.active,
-        .gh-link:hover { color: #ffd700; }
-        /* underline glide */
+        .gh-link:hover {
+          color: #ffd700;
+        }
+
         .gh-link::after {
           content: '';
           position: absolute;
@@ -192,13 +247,21 @@ const Header = () => {
           bottom: 4px;
           height: 2px;
           border-radius: 999px;
-          background: linear-gradient(90deg, transparent, #ffd700, transparent);
+          background: linear-gradient(
+            90deg,
+            transparent,
+            #ffd700,
+            transparent
+          );
           transform: scaleX(0);
           transform-origin: center;
           transition: transform 0.25s ease;
         }
+
         .gh-link:hover::after,
-        .gh-link.active::after { transform: scaleX(1); }
+        .gh-link.active::after {
+          transform: scaleX(1);
+        }
 
         /* ============ Hamburger ============ */
         .gh-hamburger {
@@ -211,6 +274,7 @@ const Header = () => {
           cursor: pointer;
           position: relative;
         }
+
         .gh-hamburger span {
           position: absolute;
           left: 7px;
@@ -218,24 +282,48 @@ const Header = () => {
           height: 2px;
           background: #ffd700;
           border-radius: 2px;
-          transition: transform 0.3s ease, opacity 0.3s ease, top 0.3s ease;
+          transition:
+            transform 0.3s ease,
+            opacity 0.3s ease,
+            top 0.3s ease;
         }
-        .gh-hamburger span:nth-child(1) { top: 9px; }
-        .gh-hamburger span:nth-child(2) { top: 16px; }
-        .gh-hamburger span:nth-child(3) { top: 23px; }
-        .gh-hamburger.open span:nth-child(1) { top: 16px; transform: rotate(45deg); }
-        .gh-hamburger.open span:nth-child(2) { opacity: 0; }
-        .gh-hamburger.open span:nth-child(3) { top: 16px; transform: rotate(-45deg); }
+
+        .gh-hamburger span:nth-child(1) {
+          top: 9px;
+        }
+
+        .gh-hamburger span:nth-child(2) {
+          top: 16px;
+        }
+
+        .gh-hamburger span:nth-child(3) {
+          top: 23px;
+        }
+
+        .gh-hamburger.open span:nth-child(1) {
+          top: 16px;
+          transform: rotate(45deg);
+        }
+
+        .gh-hamburger.open span:nth-child(2) {
+          opacity: 0;
+        }
+
+        .gh-hamburger.open span:nth-child(3) {
+          top: 16px;
+          transform: rotate(-45deg);
+        }
 
         /* ============ Mobile ============ */
         .gh-overlay {
           position: fixed;
           inset: 0;
-          background: rgba(0,0,0,0.45);
+          background: rgba(0, 0, 0, 0.45);
           backdrop-filter: blur(2px);
           -webkit-backdrop-filter: blur(2px);
           z-index: 9999;
         }
+
         .gh-mobile {
           position: fixed;
           top: calc(max(12px, env(safe-area-inset-top)) + 64px);
@@ -245,20 +333,24 @@ const Header = () => {
           background: rgba(0, 0, 0, 0.9);
           border: 1px solid rgba(255, 215, 0, 0.5);
           border-radius: 14px;
-          box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
           display: grid;
           grid-template-columns: 1fr;
           padding: 6px 0;
           opacity: 0;
           pointer-events: none;
-          transition: opacity 0.22s ease, transform 0.22s ease;
+          transition:
+            opacity 0.22s ease,
+            transform 0.22s ease;
           z-index: 10000;
         }
+
         .gh-mobile.show {
           opacity: 1;
           transform: translateX(-50%) translateY(0);
           pointer-events: auto;
         }
+
         .gh-mobile-link {
           display: block;
           padding: 14px 18px;
@@ -266,13 +358,31 @@ const Header = () => {
           color: #fff;
           font-weight: 700;
           letter-spacing: 0.3px;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
-          transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+          transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            transform 0.2s ease;
         }
-        .gh-mobile-link:last-child { border-bottom: 0; }
-        .gh-mobile-link:hover { color: #ffd700; background: rgba(255,215,0,0.06); }
-        .gh-mobile-link.active { color: #ffd700; background: rgba(255,215,0,0.08); }
-        .gh-mobile-link:active { transform: translateY(1px); }
+
+        .gh-mobile-link:last-child {
+          border-bottom: 0;
+        }
+
+        .gh-mobile-link:hover {
+          color: #ffd700;
+          background: rgba(255, 215, 0, 0.06);
+        }
+
+        .gh-mobile-link.active {
+          color: #ffd700;
+          background: rgba(255, 215, 0, 0.08);
+        }
+
+        .gh-mobile-link:active {
+          transform: translateY(1px);
+        }
+
         .gh-mobile-link:focus-visible {
           outline: 2px solid #ffd700;
           outline-offset: -2px;
@@ -280,13 +390,20 @@ const Header = () => {
 
         /* ============ Responsive ============ */
         @media (max-width: 980px) {
-          .gh-nav-desktop { display: none; }
-          .gh-hamburger { display: inline-block; }
+          .gh-nav-desktop {
+            display: none;
+          }
+
+          .gh-hamburger {
+            display: inline-block;
+          }
+
           .gh-header {
             width: calc(100% - 12px);
             padding: 10px 14px;
           }
         }
+
         @media (max-width: 520px) {
           .gh-header {
             width: calc(100% - 8px);

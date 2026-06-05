@@ -2,60 +2,163 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const cards = [
-  { i: -5, title: 'UI/UX Design', desc: 'Design intuitive & user-friendly interfaces that enhance digital experiences.', link: '#', img: '/assets/images/UI-UX.png' },
-  { i: -4, title: 'Stationary', desc: 'Professional & cohesive business essentials like cards & letterheads.', link: '#', img: '/assets/images/Stationary-Kit.png' },
-  { i: -3, title: 'Social Media', desc: 'Create engaging posts & templates to boost brand presence.', link: '#', img: '/assets/images/Social-Media-.png' },
-  { i: -2, title: 'Logo Design', desc: 'Craft unique & impactful logos representing brand values.', link: '#', img: '/assets/images/Logo-Design.png' },
-  { i: -1, title: 'Branding', desc: 'Develop color schemes, typography, & visual elements.', link: '#', img: '/assets/images/Branding.png' },
-  { i: 0, title: 'View All', desc: '', link: '#', img: '/assets/images/All-Services-1.png' },
-  { i: 1, title: 'Print Media', desc: 'Design visually compelling brochures & flyers.', link: '#', img: '/assets/images/Print-Media.png' },
-  { i: 2, title: 'Video Editing / Animation', desc: 'Produce dynamic video content & animations.', link: '#', img: '/assets/images/Video-Editing-Animation.png' },
-  { i: 3, title: 'Product Design / Packaging', desc: 'Innovative & appealing packaging designs.', link: '#', img: '/assets/images/Product-Designing-Packaging.png' },
-  { i: 4, title: 'Interior / Exterior', desc: 'Design captivating spaces aligned with your brand.', link: '#', img: '/assets/images/Interior-Exterior.png' },
-  { i: 5, title: 'Character Design', desc: 'Create custom characters for storytelling & branding.', link: '#', img: '/assets/images/Character-Design.png' },
+  {
+    i: -5,
+    title: 'UI/UX Design',
+    desc: 'Design intuitive & user-friendly interfaces that enhance digital experiences.',
+    link: '/services?cat=UI_UX',
+    img: '/assets/images/UI-UX.png',
+  },
+  {
+    i: -4,
+    title: 'Stationary',
+    desc: 'Professional & cohesive business essentials like cards & letterheads.',
+    link: '/services?cat=STATIONARY',
+    img: '/assets/images/Stationary-Kit.png',
+  },
+  {
+    i: -3,
+    title: 'Social Media',
+    desc: 'Create engaging posts & templates to boost brand presence.',
+    link: '/services?cat=SOCIAL_MEDIA',
+    img: '/assets/images/Social-Media-.png',
+  },
+  {
+    i: -2,
+    title: 'Logo Design',
+    desc: 'Craft unique & impactful logos representing brand values.',
+    link: '/services?cat=LOGO_DESIGN',
+    img: '/assets/images/Logo-Design.png',
+  },
+  {
+    i: -1,
+    title: 'Branding',
+    desc: 'Develop color schemes, typography, & visual elements.',
+    link: '/services?cat=BRANDING',
+    img: '/assets/images/Branding.png',
+  },
+  {
+    i: 0,
+    title: 'View All',
+    desc: '',
+    link: '/services',
+    img: '/assets/images/All-Services-1.png',
+  },
+  {
+    i: 1,
+    title: 'Print Media',
+    desc: 'Design visually compelling brochures & flyers.',
+    link: '/services?cat=PRINT_MEDIA',
+    img: '/assets/images/Print-Media.png',
+  },
+  {
+    i: 2,
+    title: 'Video Editing / Animation',
+    desc: 'Produce dynamic video content & animations.',
+    link: '/services?cat=VIDEO_EDITING_ANIMATION',
+    img: '/assets/images/Video-Editing-Animation.png',
+  },
+  {
+    i: 3,
+    title: 'Product Design / Packaging',
+    desc: 'Innovative & appealing packaging designs.',
+    link: '/services?cat=PRODUCT_DESIGN_PACKAGING',
+    img: '/assets/images/Product-Designing-Packaging.png',
+  },
+  {
+    i: 4,
+    title: 'Interior / Exterior',
+    desc: 'Design captivating spaces aligned with your brand.',
+    link: '/services?cat=INTERIOR_EXTERIOR',
+    img: '/assets/images/Interior-Exterior.png',
+  },
+  {
+    i: 5,
+    title: 'Character Design',
+    desc: 'Create custom characters for storytelling & branding.',
+    link: '/services?cat=CHARACTER_DESIGN',
+    img: '/assets/images/Character-Design.png',
+  },
 ]
 
 export default function WondersSection() {
-  const [hovered, setHovered] = useState<{ title: string; desc: string } | null>(null)
+  const [hovered, setHovered] = useState<{
+    title: string
+    desc: string
+  } | null>(null)
+
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const [animate, setAnimate] = useState(false)
-  const sectionRef = useRef<HTMLDivElement | null>(null)
+  const sectionRef = useRef<HTMLElement | null>(null)
 
-  // 🎬 Trigger animation on scroll
+  // Trigger animation when the section enters the screen
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setAnimate(true)
+        if (entry.isIntersecting) {
+          setAnimate(true)
+        }
       },
       { threshold: 0.4 }
     )
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => {
+      observer.disconnect()
+    }
   }, [])
 
   return (
-    <section ref={sectionRef} className={`wonders ${animate ? 'animate' : ''}`}>
+    <section
+      ref={sectionRef}
+      className={`wonders ${animate ? 'animate' : ''}`}
+    >
       <h2 className="title">
         Wonders <span>We Weave</span>
       </h2>
+
       <p className="subtitle">
-        Dive into our array of mystical offerings – from web enchantments to branding spells &
-        immersive 3D illusions.
+        Dive into our array of mystical offerings – from web enchantments to
+        branding spells & immersive 3D illusions.
       </p>
 
       <div className="card-container">
         {cards.map((card) => (
-          <div
+          <Link
             key={card.i}
-            className={`card ${animate ? 'visible' : ''} ${hoveredCard === card.i ? 'lifted' : ''}`}
+            href={card.link}
+            aria-label={`View ${card.title} services`}
+            className={`card ${animate ? 'visible' : ''} ${
+              hoveredCard === card.i ? 'lifted' : ''
+            }`}
             style={{ '--i': card.i } as React.CSSProperties}
             onMouseEnter={() => {
-              setHovered({ title: card.title, desc: card.desc })
+              setHovered({
+                title: card.title,
+                desc: card.desc,
+              })
+
               setHoveredCard(card.i)
             }}
             onMouseLeave={() => {
+              setHovered(null)
+              setHoveredCard(null)
+            }}
+            onFocus={() => {
+              setHovered({
+                title: card.title,
+                desc: card.desc,
+              })
+
+              setHoveredCard(card.i)
+            }}
+            onBlur={() => {
               setHovered(null)
               setHoveredCard(null)
             }}
@@ -74,54 +177,64 @@ export default function WondersSection() {
                 objectFit: 'cover',
               }}
             />
-          </div>
+          </Link>
         ))}
 
         <div className={`title-display ${hovered ? 'show' : ''}`}>
           <div className="title-text">{hovered?.title || ''}</div>
-          <div className="description">{hovered?.desc || ''}</div>
+
+          <div className="description">
+            {hovered?.desc || ''}
+          </div>
         </div>
       </div>
 
       <style jsx>{`
-       .wonders {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  background-color: #000;
-  color: #fff;
-  text-align: center;
-  padding: 100px 5% 300px;
-  background-image: url('/assets/images/cardsbg.png');
-  background-size: 900px;
-  background-repeat: repeat;
-  background-position: center;
-  margin-bottom: 100px;
-  box-sizing: border-box;
-}
+        .wonders {
+          position: relative;
+          width: 100%;
+          overflow: hidden;
+          background-color: #000;
+          color: #fff;
+          text-align: center;
+          padding: 100px 5% 300px;
+          background-image: url('/assets/images/cardsbg.png');
+          background-size: 900px;
+          background-repeat: repeat;
+          background-position: center;
+          margin-bottom: 100px;
+          box-sizing: border-box;
+        }
 
-/* TOP + BOTTOM BLACK FADES */
-.wonders::before,
-.wonders::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 120px;        /* adjust fade height */
-  pointer-events: none;
-  z-index: 2;
-}
+        /* Top and bottom black fades */
+        .wonders::before,
+        .wonders::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          width: 100%;
+          height: 120px;
+          pointer-events: none;
+          z-index: 2;
+        }
 
-.wonders::before {
-  top: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
-}
+        .wonders::before {
+          top: 0;
+          background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 1),
+            rgba(0, 0, 0, 0)
+          );
+        }
 
-.wonders::after {
-  bottom: 0;
-  background: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
-}
-
+        .wonders::after {
+          bottom: 0;
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 1),
+            rgba(0, 0, 0, 0)
+          );
+        }
 
         .title {
           font-size: 3rem;
@@ -130,9 +243,9 @@ export default function WondersSection() {
         }
 
         .title span {
-              color: #ffd700;
-          font-family: 'Corinthia' , serif;
-       font-size: clamp(3rem, 7vw, 9rem);
+          color: #ffd700;
+          font-family: 'Corinthia', serif;
+          font-size: clamp(3rem, 7vw, 9rem);
           font-weight: 500;
           margin-left: -15px;
         }
@@ -156,39 +269,55 @@ export default function WondersSection() {
           overflow: visible;
         }
 
-        .card {
+        /* Cards are now clickable Link elements */
+        :global(.card) {
           position: absolute;
           width: 200px;
           height: 300px;
           border-radius: 10px;
-          background: linear-gradient(to right, #77530a, #ffd277, #77530a);
+          background: linear-gradient(
+            to right,
+            #77530a,
+            #ffd277,
+            #77530a
+          );
           padding: 5px;
           display: flex;
           justify-content: center;
           align-items: center;
           cursor: pointer;
           opacity: 0;
+          text-decoration: none;
           transform-origin: 50% 250%;
           transform: translateY(80px) scale(0.8);
           transition: all 0.4s ease;
         }
 
-        /* 🎬 Animation after scroll */
-        .animate .card.visible {
+        /* Animation after scroll */
+        :global(.animate .card.visible) {
           opacity: 1;
-          transform: rotate(calc(var(--i) * 12deg))
+          transform:
+            rotate(calc(var(--i) * 12deg))
             translate(calc(var(--i) * -15px), 10px)
             scale(1);
         }
 
-        /* ⬆️ Lifted hover state - only lift, no other transforms */
-        .card.lifted {
-          transform: rotate(calc(var(--i) * 12deg))
+        /* Lift card on hover or keyboard focus */
+        :global(.card.lifted) {
+          transform:
+            rotate(calc(var(--i) * 12deg))
             translate(calc(var(--i) * -15px), -40px)
             scale(1) !important;
           background-position: right;
           background-size: 200%;
-          filter: drop-shadow(0 20px 40px rgba(255, 215, 0, 0.4));
+          filter: drop-shadow(
+            0 20px 40px rgba(255, 215, 0, 0.4)
+          );
+        }
+
+        :global(.card:focus-visible) {
+          outline: 3px solid #ffd700;
+          outline-offset: 5px;
         }
 
         .title-display {
@@ -220,25 +349,34 @@ export default function WondersSection() {
           .wonders {
             padding: 10px 5% 100px;
           }
+
           .card-container {
             height: 300px;
           }
-          .animate .card.visible {
-            transform: rotate(calc(var(--i) * 10deg)) translate(calc(var(--i) * -10px), 40px)
+
+          :global(.animate .card.visible) {
+            transform:
+              rotate(calc(var(--i) * 10deg))
+              translate(calc(var(--i) * -10px), 40px)
               scale(1);
           }
-          .card.lifted {
-            transform: rotate(calc(var(--i) * 10deg)) 
+
+          :global(.card.lifted) {
+            transform:
+              rotate(calc(var(--i) * 10deg))
               translate(calc(var(--i) * -10px), -25px)
               scale(1) !important;
           }
-          .card {
+
+          :global(.card) {
             width: 150px;
             height: 220px;
           }
+
           .title {
             font-size: 2.4rem;
           }
+
           .subtitle {
             font-size: 0.9rem;
           }
@@ -248,23 +386,31 @@ export default function WondersSection() {
           .card-container {
             height: 240px;
           }
-          .card {
+
+          :global(.card) {
             width: 90px;
             height: 140px;
           }
-          .animate .card.visible {
-            transform: rotate(calc(var(--i) * 8deg)) translate(calc(var(--i) * -2px), 70px)
+
+          :global(.animate .card.visible) {
+            transform:
+              rotate(calc(var(--i) * 8deg))
+              translate(calc(var(--i) * -2px), 70px)
               scale(1);
           }
-          .card.lifted {
-            transform: rotate(calc(var(--i) * 8deg)) 
+
+          :global(.card.lifted) {
+            transform:
+              rotate(calc(var(--i) * 8deg))
               translate(calc(var(--i) * -2px), 40px)
               scale(1) !important;
           }
+
           .title-display {
             bottom: -60px;
             max-width: 360px;
           }
+
           .title {
             font-size: 1.8rem;
           }
