@@ -1,13 +1,10 @@
-/* ===== Import Google Fonts First ===== */
-@import url('https://fonts.googleapis.com/css2?family=Arima:wght@400;700&family=Corinthia&display=swap');
-
 /* ===== Import TailwindCSS ===== */
 @import "tailwindcss";
 
 /* ===== ROOT COLORS ===== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #ffffff;
   --font-sans: 'Arima', serif;  /* Main font */
   --font-serif: 'Corinthia', sans-serif;  /* Side font */
   --font-mono: 'Courier New', monospace;
@@ -35,6 +32,14 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), serif; /* Uses Arima as the main font */
   scroll-behavior: smooth;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100vh;
 }
 
 /* ===== HEADINGS AND SIDE ELEMENTS ===== */

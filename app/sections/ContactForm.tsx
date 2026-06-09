@@ -106,7 +106,7 @@ export default function ContactUs() {
           Contact <span>Us</span>
         </h1>
         <h2 className="sub">Reach Us Out</h2>
-        <p className="subdesc">Let us know how to get back to you!</p>
+        <p className="subdesc">Ready to shape your vision? Share the details & we’ll connect within 24 hours.</p>
       </header>
 
       <div className="container">

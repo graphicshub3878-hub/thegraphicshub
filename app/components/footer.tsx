@@ -17,6 +17,7 @@ export default function Footer() {
 
   // --- INTERNAL ROUTES (edit these as needed)
   const routes = {
+    services: '/services',
     faqs: '/faqs',
     contact: '/contact-us',
     terms: '/tncs',
@@ -166,6 +167,7 @@ export default function Footer() {
                 }}
               >
                 {[
+                  { label: 'Services', href: routes.services },
                   { label: "FAQ's", href: routes.faqs },
                   { label: 'Contact Us', href: routes.contact },
                   { label: 'Terms & Conditions', href: routes.terms },
@@ -346,9 +348,7 @@ export default function Footer() {
   <span style={{ fontWeight: 700, color: '#999' }}>
     "Graphics Hub"
   </span>{' '}
-  is your one-stop solution for stunning visual experiences. We specialize in
-  creating captivating designs for social media, websites, branding, 3D, interiors, exteriors, & print
-  materials. Let us elevate your brand with our expertise.
+  is your one-stop creative studio for stunning visual experiences. We specialize in social media design, websites, branding, AI-powered visuals, 3D design, interiors, exteriors & print materials, helping brands bring ideas to life with creativity, strategy & innovation.
 </p>
 </div>
 

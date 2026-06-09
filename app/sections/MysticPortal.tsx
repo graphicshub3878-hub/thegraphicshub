@@ -99,9 +99,12 @@ export default function MysticPortalExact() {
   useEffect(() => {
     if (!mounted) return
     if (autoRef.current) clearTimeout(autoRef.current)
-    autoRef.current = setTimeout(() => go(1), 6000) as unknown as NodeJS.Timeout
+    autoRef.current = setTimeout(() => {
+      setTransitionMs(450)
+      setPos((current) => current + 1)
+    }, 6000) as unknown as NodeJS.Timeout
     return () => { if (autoRef.current) clearTimeout(autoRef.current) }
-  }, [pos, STEP, mounted])
+  }, [pos, mounted])
 
   const go = (delta: number) => {
     setTransitionMs(450)
@@ -161,7 +164,14 @@ export default function MysticPortalExact() {
   const trackX = VIEWPORT_PAD_LEFT - (pos * STEP) + drag
   const [firstWord, secondWord = ''] = active.title.split(' ')
 
-  if (!mounted) return null
+  if (!mounted) {
+    return (
+      <section
+        aria-hidden="true"
+        style={{ minHeight: '100vh', background: '#000' }}
+      />
+    )
+  }
 
   return (
     <section

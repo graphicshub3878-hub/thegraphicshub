@@ -134,7 +134,7 @@ export default function WondersSection() {
             key={card.i}
             href={card.link}
             aria-label={`View ${card.title} services`}
-            className={`card ${animate ? 'visible' : ''} ${
+            className={`wonder-card ${animate ? 'visible' : ''} ${
               hoveredCard === card.i ? 'lifted' : ''
             }`}
             style={{ '--i': card.i } as React.CSSProperties}
@@ -270,7 +270,7 @@ export default function WondersSection() {
         }
 
         /* Cards are now clickable Link elements */
-        :global(.card) {
+        :global(.wonder-card) {
           position: absolute;
           width: 200px;
           height: 300px;
@@ -294,7 +294,7 @@ export default function WondersSection() {
         }
 
         /* Animation after scroll */
-        :global(.animate .card.visible) {
+        :global(.animate .wonder-card.visible) {
           opacity: 1;
           transform:
             rotate(calc(var(--i) * 12deg))
@@ -303,7 +303,7 @@ export default function WondersSection() {
         }
 
         /* Lift card on hover or keyboard focus */
-        :global(.card.lifted) {
+        :global(.wonder-card.lifted) {
           transform:
             rotate(calc(var(--i) * 12deg))
             translate(calc(var(--i) * -15px), -40px)
@@ -315,7 +315,7 @@ export default function WondersSection() {
           );
         }
 
-        :global(.card:focus-visible) {
+        :global(.wonder-card:focus-visible) {
           outline: 3px solid #ffd700;
           outline-offset: 5px;
         }
@@ -354,21 +354,21 @@ export default function WondersSection() {
             height: 300px;
           }
 
-          :global(.animate .card.visible) {
+          :global(.animate .wonder-card.visible) {
             transform:
               rotate(calc(var(--i) * 10deg))
               translate(calc(var(--i) * -10px), 40px)
               scale(1);
           }
 
-          :global(.card.lifted) {
+          :global(.wonder-card.lifted) {
             transform:
               rotate(calc(var(--i) * 10deg))
               translate(calc(var(--i) * -10px), -25px)
               scale(1) !important;
           }
 
-          :global(.card) {
+          :global(.wonder-card) {
             width: 150px;
             height: 220px;
           }
@@ -387,19 +387,19 @@ export default function WondersSection() {
             height: 240px;
           }
 
-          :global(.card) {
+          :global(.wonder-card) {
             width: 90px;
             height: 140px;
           }
 
-          :global(.animate .card.visible) {
+          :global(.animate .wonder-card.visible) {
             transform:
               rotate(calc(var(--i) * 8deg))
               translate(calc(var(--i) * -2px), 70px)
               scale(1);
           }
 
-          :global(.card.lifted) {
+          :global(.wonder-card.lifted) {
             transform:
               rotate(calc(var(--i) * 8deg))
               translate(calc(var(--i) * -2px), 40px)

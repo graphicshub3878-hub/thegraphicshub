@@ -128,7 +128,7 @@ export default function PraiseSection() {
 
       setLeftShift(-centerX)
 
-      const gap = Math.max(24, Math.round(cardW * 0.12))
+      const gap = Math.max(40, Math.round(cardW * 0.18))
       setBase(cardW + gap)
     }
 
@@ -509,7 +509,7 @@ export default function PraiseSection() {
           align-items: center;
           perspective: 1200px;
           width: 100%;
-          max-width: 1120px;
+          max-width: 1280px;
           height: 460px;
           position: relative;
           will-change: transform;
@@ -535,7 +535,7 @@ export default function PraiseSection() {
           position: absolute;
           left: 0;
           top: 0;
-          width: 304px;
+          width: clamp(280px, 26vw, 344px);
           background: rgba(255, 215, 0, 0.06);
           border: 1px solid rgba(255, 215, 0, 0.24);
           border-radius: 16px;
@@ -660,7 +660,7 @@ export default function PraiseSection() {
           }
 
           .card {
-            width: 280px;
+            width: clamp(252px, 56vw, 300px);
             padding: 24px 20px 44px;
           }
 
@@ -682,7 +682,7 @@ export default function PraiseSection() {
           }
 
           .card {
-            width: 240px;
+            width: min(86vw, 260px);
             padding: 22px 18px 40px;
           }
 
@@ -716,7 +716,7 @@ export default function PraiseSection() {
           }
 
           .card {
-            width: 208px;
+            width: min(88vw, 234px);
             padding: 20px 16px 36px;
           }
 

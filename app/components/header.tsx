@@ -14,11 +14,6 @@ const Header = () => {
   const pathname = usePathname() || '/'
   const [menuOpen, setMenuOpen] = useState(false)
 
-  // Close menu whenever route changes
-  useEffect(() => {
-    setMenuOpen(false)
-  }, [pathname])
-
   // Prevent body scroll when menu is open
   useEffect(() => {
     if (!menuOpen) return
@@ -50,7 +45,7 @@ const Header = () => {
     () => [
       { label: 'Home', href: '/' },
       { label: 'About Us', href: '/about-us' },
-      { label: 'Porfolio', href: '/gallery' },
+      { label: 'Portfolio', href: '/gallery' },
       // { label: 'Services', href: '/services' },
       { label: 'Pricing', href: '/pricing' },
       { label: 'Contact Us', href: '/contact-us' },
@@ -75,54 +70,61 @@ const Header = () => {
   }
 
   return (
-    <header className="gh-header" role="banner">
-      {/* Logo */}
-      <Link href="/" className="gh-logo" aria-label="Graphics Hub — Home">
-        <Image
-          className="gh-logo-image"
-          src="/assets/images/Logo.png"
-          alt="Graphics Hub Logo"
-          width={220}
-          height={64}
-          priority
-          style={{
-            objectFit: 'contain',
-            height: 'auto',
-          }}
-        />
-      </Link>
+    <>
+      <header className="gh-header" role="banner">
+        {/* Logo */}
+        <Link
+          href="/"
+          className="gh-logo"
+          aria-label="Graphics Hub — Home"
+          onClick={() => setMenuOpen(false)}
+        >
+          <Image
+            className="gh-logo-image"
+            src="/assets/images/Logo.png"
+            alt="Graphics Hub Logo"
+            width={220}
+            height={64}
+            priority
+            style={{
+              objectFit: 'contain',
+              height: 'auto',
+            }}
+          />
+        </Link>
 
-      {/* Desktop Nav */}
-      <nav className="gh-nav-desktop" aria-label="Primary">
-        {nav.map(({ label, href }) => {
-          const active = isActive(href)
+        {/* Desktop Nav */}
+        <nav className="gh-nav-desktop" aria-label="Primary">
+          {nav.map(({ label, href }) => {
+            const active = isActive(href)
 
-          return (
-            <Link
-              key={href}
-              href={href}
-              aria-current={active ? 'page' : undefined}
-              className={`gh-link ${active ? 'active' : ''}`}
-              style={active ? { color: '#ffd700' } : undefined}
-            >
-              <span className="gh-link-text">{label}</span>
-            </Link>
-          )
-        })}
-      </nav>
+            return (
+              <Link
+                key={href}
+                href={href}
+                aria-current={active ? 'page' : undefined}
+                className={`gh-link ${active ? 'active' : ''}`}
+                style={active ? { color: '#ffd700' } : undefined}
+              >
+                <span className="gh-link-text">{label}</span>
+              </Link>
+            )
+          })}
+        </nav>
 
-      {/* Hamburger */}
-      <button
-        className={`gh-hamburger ${menuOpen ? 'open' : ''}`}
-        aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-        aria-expanded={menuOpen}
-        aria-controls="mobile-menu"
-        onClick={() => setMenuOpen((v) => !v)}
-      >
-        <span />
-        <span />
-        <span />
-      </button>
+        {/* Hamburger */}
+        <button
+          className={`gh-hamburger ${menuOpen ? 'open' : ''}`}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+      </header>
 
       {/* Overlay */}
       {menuOpen && (
@@ -137,6 +139,7 @@ const Header = () => {
         id="mobile-menu"
         className={`gh-mobile ${menuOpen ? 'show' : ''}`}
         aria-label="Mobile Primary"
+        aria-hidden={!menuOpen}
       >
         {nav.map(({ label, href }) => {
           const active = isActive(href)
@@ -148,6 +151,8 @@ const Header = () => {
               aria-current={active ? 'page' : undefined}
               className={`gh-mobile-link ${active ? 'active' : ''}`}
               style={active ? { color: '#ffd700' } : undefined}
+              tabIndex={menuOpen ? 0 : -1}
+              onClick={() => setMenuOpen(false)}
             >
               {label}
             </Link>
@@ -169,6 +174,7 @@ const Header = () => {
         /* Move the actual PNG slightly upward */
         :global(.gh-logo-image) {
           transform: translateY(-5px);
+          width: clamp(170px, 18vw, 220px);
         }
 
         /* ============ Shell ============ */
@@ -318,65 +324,88 @@ const Header = () => {
         .gh-overlay {
           position: fixed;
           inset: 0;
-          background: rgba(0, 0, 0, 0.45);
-          backdrop-filter: blur(2px);
-          -webkit-backdrop-filter: blur(2px);
-          z-index: 9999;
+          background: rgba(0, 0, 0, 0.68);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          z-index: 9998;
         }
 
         .gh-mobile {
           position: fixed;
-          top: calc(max(12px, env(safe-area-inset-top)) + 64px);
+          top: calc(max(12px, env(safe-area-inset-top)) + 78px);
           left: 50%;
-          transform: translateX(-50%) translateY(-10px);
-          width: min(680px, calc(100% - 16px));
-          background: rgba(0, 0, 0, 0.9);
-          border: 1px solid rgba(255, 215, 0, 0.5);
-          border-radius: 14px;
-          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+          transform: translateX(-50%) translateY(-12px) scale(0.98);
+          width: min(420px, calc(100% - 24px));
+          max-height: calc(100dvh - 104px - env(safe-area-inset-bottom));
+          overflow-y: auto;
+          background: rgba(8, 8, 8, 0.96);
+          border: 1px solid rgba(255, 215, 0, 0.42);
+          border-radius: 18px;
+          box-shadow:
+            0 24px 70px rgba(0, 0, 0, 0.72),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05);
           display: grid;
           grid-template-columns: 1fr;
-          padding: 6px 0;
+          gap: 4px;
+          padding: 10px;
           opacity: 0;
+          visibility: hidden;
           pointer-events: none;
           transition:
             opacity 0.22s ease,
-            transform 0.22s ease;
-          z-index: 10000;
+            transform 0.22s ease,
+            visibility 0.22s ease;
+          z-index: 10001;
         }
 
         .gh-mobile.show {
           opacity: 1;
-          transform: translateX(-50%) translateY(0);
+          visibility: visible;
+          transform: translateX(-50%) translateY(0) scale(1);
           pointer-events: auto;
         }
 
         .gh-mobile-link {
-          display: block;
-          padding: 14px 18px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          min-height: 52px;
+          padding: 13px 16px;
           text-decoration: none;
           color: #fff;
-          font-weight: 700;
+          font-family: 'Arima', serif;
+          font-size: 1rem;
+          font-weight: 600;
           letter-spacing: 0.3px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+          border: 1px solid transparent;
+          border-radius: 12px;
           transition:
             background 0.2s ease,
             color 0.2s ease,
             transform 0.2s ease;
         }
 
-        .gh-mobile-link:last-child {
-          border-bottom: 0;
-        }
-
         .gh-mobile-link:hover {
           color: #ffd700;
-          background: rgba(255, 215, 0, 0.06);
+          background: rgba(255, 215, 0, 0.07);
         }
 
         .gh-mobile-link.active {
           color: #ffd700;
-          background: rgba(255, 215, 0, 0.08);
+          background: rgba(255, 215, 0, 0.1);
+          border-color: rgba(255, 215, 0, 0.18);
+          padding-left: 22px;
+        }
+
+        .gh-mobile-link.active::before {
+          content: '';
+          position: absolute;
+          left: 10px;
+          width: 3px;
+          height: 22px;
+          border-radius: 999px;
+          background: #ffd700;
+          box-shadow: 0 0 12px rgba(255, 215, 0, 0.55);
         }
 
         .gh-mobile-link:active {
@@ -400,19 +429,43 @@ const Header = () => {
 
           .gh-header {
             width: calc(100% - 12px);
-            padding: 10px 14px;
+            min-height: 66px;
+            padding: 8px 12px;
+          }
+
+          :global(.gh-logo-image) {
+            width: 160px;
           }
         }
 
         @media (max-width: 520px) {
           .gh-header {
-            width: calc(100% - 8px);
-            padding: 8px 12px;
+            top: max(8px, env(safe-area-inset-top));
+            width: calc(100% - 16px);
+            min-height: 60px;
+            padding: 7px 10px;
             border-radius: 14px;
+          }
+
+          :global(.gh-logo-image) {
+            width: 142px;
+            transform: translateY(-3px);
+          }
+
+          .gh-mobile {
+            top: calc(max(8px, env(safe-area-inset-top)) + 68px);
+            width: calc(100% - 16px);
+            max-height: calc(100dvh - 88px - env(safe-area-inset-bottom));
+            border-radius: 16px;
+          }
+
+          .gh-mobile-link {
+            min-height: 50px;
+            padding-block: 12px;
           }
         }
       `}</style>
-    </header>
+    </>
   )
 }
 
