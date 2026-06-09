@@ -123,8 +123,14 @@ export default function WondersSection() {
         Wonders <span>We Weave</span>
       </h2>
 
+      <div className="services-divider">
+        <span className="services-divider__line"></span>
+        <span className="services-divider__text">Our Services</span>
+        <span className="services-divider__line"></span>
+      </div>
+
       <p className="subtitle">
-        Dive into our array of mystical offerings – from web enchantments to
+        Dive into our array of mystical offerings, from web enchantments to
         branding spells & immersive 3D illusions.
       </p>
 
@@ -197,12 +203,12 @@ export default function WondersSection() {
           background-color: #000;
           color: #fff;
           text-align: center;
-          padding: 100px 5% 300px;
+          padding: 100px 5% 160px;
           background-image: url('/assets/images/cardsbg.png');
           background-size: 900px;
           background-repeat: repeat;
           background-position: center;
-          margin-bottom: 100px;
+          margin-bottom: 0;
           box-sizing: border-box;
         }
 
@@ -240,6 +246,7 @@ export default function WondersSection() {
           font-size: 3rem;
           font-weight: 700;
           font-family: 'Arima', serif;
+          margin: 0 0 18px;
         }
 
         .title span {
@@ -250,11 +257,35 @@ export default function WondersSection() {
           margin-left: -15px;
         }
 
+        .services-divider {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          margin: 0 0 18px;
+        }
+
+        .services-divider__line {
+          width: 24px;
+          height: 1px;
+          background: #fff;
+          opacity: 0.9;
+        }
+
+        .services-divider__text {
+          color: #fff;
+          font-family: 'Arima', serif;
+          font-size: clamp(1rem, 1.5vw, 1.25rem);
+          font-style: italic;
+          white-space: nowrap;
+        }
+
         .subtitle {
           font-size: 1rem;
           color: rgba(255, 255, 255, 0.8);
           max-width: 650px;
-          margin: 20px auto 60px;
+          margin: 0 auto 60px;
           font-family: 'Arima', sans-serif;
         }
 
@@ -375,6 +406,11 @@ export default function WondersSection() {
 
           .title {
             font-size: 2.4rem;
+            margin-bottom: 12px;
+          }
+
+          .services-divider {
+            margin-bottom: 16px;
           }
 
           .subtitle {

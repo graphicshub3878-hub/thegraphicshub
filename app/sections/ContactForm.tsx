@@ -123,7 +123,7 @@ export default function ContactUs() {
         <div className="right">
           <div className="formBox">
             <h3>Get In Touch</h3>
-            <p className="desc">Tell us a bit about your project — we’ll reply soon.</p>
+            <p className="desc">Tell us a bit about your project.</p>
 
             <form onSubmit={onSubmit} noValidate>
               {/* Honeypot field - hidden from real users */}

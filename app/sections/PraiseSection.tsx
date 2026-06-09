@@ -298,7 +298,7 @@ export default function PraiseSection() {
       </div>
 
       <p className="praise-subtitle">
-        Hear from those who’ve experienced our magic firsthand — real stories
+        Hear from those who’ve experienced our magic firsthand, real stories
         of transformation from happy clients.
       </p>
 
@@ -414,7 +414,7 @@ export default function PraiseSection() {
           font-weight: 700;
           font-family: 'Arima', serif;
           letter-spacing: 0.5px;
-          margin: 0;
+          margin: 0 0 18px;
         }
 
         .praise-title span {
@@ -430,9 +430,8 @@ export default function PraiseSection() {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 10px;
-          margin-top: -60px;
-          margin-bottom: 58px;
+          gap: 12px;
+          margin: 0 0 18px;
         }
 
         .reviews-divider__line {
@@ -443,8 +442,8 @@ export default function PraiseSection() {
 
         .reviews-divider__text {
           color: #fff;
-          font-family: 'Arima', sans-serif;
-          font-size: clamp(1rem, 1.4vw, 1.2rem);
+          font-family: 'Arima', serif;
+          font-size: clamp(1rem, 1.5vw, 1.25rem);
           font-style: italic;
           white-space: nowrap;
         }
@@ -670,9 +669,12 @@ export default function PraiseSection() {
         }
 
         @media (max-width: 768px) {
+          .praise-title {
+            margin-bottom: 12px;
+          }
+
           .reviews-divider {
-            margin-top: -14px;
-            margin-bottom: 42px;
+            margin-bottom: 16px;
           }
 
           .arrow {
@@ -701,8 +703,7 @@ export default function PraiseSection() {
           }
 
           .reviews-divider {
-            margin-top: -6px;
-            margin-bottom: 34px;
+            margin-bottom: 16px;
           }
 
           .reviews-divider__line {

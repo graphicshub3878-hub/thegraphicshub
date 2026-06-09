@@ -174,18 +174,29 @@ export default function MysticPortalExact() {
   }
 
   return (
-    <section
-      className="portal"
-      onDragStart={(e) => e.preventDefault()}
-      style={
-        {
-          ['--card-w' as any]: `${cardW}px`,
-          ['--card-h' as any]: `${cardH}px`,
-          ['--gap' as any]: `${gap}px`,
-          ['--view-cards' as any]: viewCards,
-        } as React.CSSProperties
-      }
-    >
+    <>
+      <section className="portal-intro">
+        <h2 className="portal-heading__title">
+          Beyond the <span>Hub</span>
+        </h2>
+        <p className="portal-heading__description">
+          Explore our extended creative universe at Wonder Works Digital, where
+          more digital solutions come to life.
+        </p>
+      </section>
+
+      <section
+        className="portal"
+        onDragStart={(e) => e.preventDefault()}
+        style={
+          {
+            ['--card-w' as any]: `${cardW}px`,
+            ['--card-h' as any]: `${cardH}px`,
+            ['--gap' as any]: `${gap}px`,
+            ['--view-cards' as any]: viewCards,
+          } as React.CSSProperties
+        }
+      >
       {/* BG cross-fade */}
       <div className="bg-layer">
         {slides.map((s, i) => (
@@ -287,14 +298,19 @@ export default function MysticPortalExact() {
           <button className="arrow right" onClick={next} aria-label="Next">›</button>
         </div>
       </div>
+      </section>
 
       {/* === FULL STYLE BLOCK === */}
       <style jsx>{`
+        .portal-intro { width: 100%; padding: 56px 5% 42px; color: #fff; background: #000; text-align: center; }
         .portal { position: relative; width: 100%; min-height: 100vh; color: #fff; background: #000; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 80px 40px; }
         .bg-layer { position: absolute; inset: 0; z-index: 0; }
         .bg { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transform: scale(1.04); transition: opacity .9s ease, transform 1.2s ease; }
         .bg.show { opacity: 1; transform: scale(1); }
         .overlay { position: absolute; inset: 0; background: rgba(0,0,0,.55); z-index: 1; }
+        .portal-heading__title { margin: 0 0 18px; font-size: 3rem; font-weight: 700; font-family: 'Arima', serif; }
+        .portal-heading__title span { color: #ffd700; font-family: 'Corinthia', serif; font-size: clamp(3rem, 7vw, 9rem); font-weight: 500; margin-left: -15px; }
+        .portal-heading__description { max-width: 650px; margin: 0 auto; color: rgba(255,255,255,.8); font-family: 'Arima', sans-serif; font-size: 1rem; line-height: 1.7; }
         .portal__content { position: relative; z-index: 2; width: 100%; max-width: 1500px; display: grid; grid-template-columns: 56px 720px 1fr; column-gap: 40px; align-items: center; }
 
         .rail { position: relative; height: 100%; justify-self: start; }
@@ -398,10 +414,16 @@ export default function MysticPortalExact() {
           .viewport { width: 100%; }
         }
         @media (max-width: 768px) {
+          .portal-intro { padding: 36px 5% 30px; }
           .portal { padding: 56px 20px; }
+          .portal-heading__title { margin-bottom: 12px; font-size: 2.4rem; }
+          .portal-heading__description { font-size: .9rem; }
           .rail { display: none !important; }
         }
+        @media (max-width: 480px) {
+          .portal-heading__title { font-size: 1.8rem; }
+        }
       `}</style>
-    </section>
+    </>
   )
 }
