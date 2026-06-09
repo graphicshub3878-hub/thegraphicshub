@@ -20,7 +20,7 @@ export const CATEGORY_LABELS = [
   'Product/Packaging Design',
   'Silhouettes',
   'Social Media',
-  'Stationary',
+  'Stationery',
   'Typography',
   'UI/UX',
   'Vectors Design',
@@ -52,7 +52,7 @@ export type CategoryCode =
   | 'PRODUCT_PACKAGING'
   | 'SILHOUETTES'
   | 'SOCIAL_MEDIA'
-  | 'STATIONARY'
+  | 'STATIONERY'
   | 'TYPOGRAPHY'
   | 'UI_UX'
   | 'VECTORS_DESIGN'
@@ -81,7 +81,7 @@ export const LABEL_TO_CODE: Record<CategoryLabel, CategoryCode> = {
   'Product/Packaging Design': 'PRODUCT_PACKAGING',
   'Silhouettes': 'SILHOUETTES',
   'Social Media': 'SOCIAL_MEDIA',
-  'Stationary': 'STATIONARY',
+  'Stationery': 'STATIONERY',
   'Typography': 'TYPOGRAPHY',
   'UI/UX': 'UI_UX',
   'Vectors Design': 'VECTORS_DESIGN',
@@ -149,7 +149,7 @@ export const SUBCATEGORIES: Record<CategoryCode, string[]> = {
 
   SOCIAL_MEDIA: ['Carousel', 'Posts', 'Reels', 'Stories'],
 
-  STATIONARY: ['Business Card', 'Envelope', 'Letterhead', 'Invoice', 'Merchandise'],
+  STATIONERY: ['Business Card', 'Envelope', 'Letterhead', 'Invoice', 'Merchandise'],
 
   TYPOGRAPHY: ['Arabic', 'English', 'Urdu'],
 

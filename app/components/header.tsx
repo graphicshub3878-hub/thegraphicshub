@@ -220,6 +220,7 @@ const Header = () => {
           display: flex;
           align-items: center;
           gap: clamp(16px, 4vw, 36px);
+          padding-right: 8px;
         }
 
         .gh-link {
