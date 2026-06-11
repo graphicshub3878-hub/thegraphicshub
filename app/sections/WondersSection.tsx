@@ -242,20 +242,28 @@ export default function WondersSection() {
           );
         }
 
-        .title {
-          font-size: 3rem;
-          font-weight: 700;
-          font-family: 'Arima', serif;
-          margin: 0 0 18px;
-        }
+       .title {
+  position: relative;
+  z-index: 3;
+  font-size: 3rem;
+  font-weight: 700;
+  font-family: 'Arima', serif;
+  margin: 0 0 18px;
+  opacity: 1;
+  text-shadow: none;
+}
 
-        .title span {
-          color: #ffd700;
-          font-family: 'Corinthia', serif;
-          font-size: clamp(3rem, 7vw, 9rem);
-          font-weight: 500;
-          margin-left: -15px;
-        }
+.title span {
+  position: relative;
+  z-index: 3;
+  color: #ffd700;
+  font-family: 'Corinthia', serif;
+  font-size: clamp(3rem, 7vw, 9rem);
+  font-weight: 500;
+  margin-left: -15px;
+  opacity: 1;
+  text-shadow: none;
+}
 
         .services-divider {
           width: 100%;

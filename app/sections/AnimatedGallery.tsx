@@ -22,9 +22,8 @@ export default function InfiniteGallery({
     ['/assets/images/col5-1.png', '/assets/images/col5-2.png', '/assets/images/col5-3.png', '/assets/images/col5-4.png', '/assets/images/col5-5.png'],
   ]
 
-  const columns = useMemo(() => COL_IMAGES.map((col) => [...col, ...col]), [COL_IMAGES])
+  const columns = useMemo(() => COL_IMAGES.map((col) => [...col, ...col]), [])
 
-  // If parent didn't pass a handler, push to /services
   const handleClick = onButtonClick ?? (() => router.push('/services'))
 
   return (
@@ -37,11 +36,16 @@ export default function InfiniteGallery({
         {columns.map((col, idx) => {
           const dir = idx % 2 === 0 ? 'up' : 'down'
           const dur = 26 + idx * 2
+
           return (
-            <div key={idx} className={`col ${dir}`} style={{ ['--dur' as any]: `${dur}s` }}>
+            <div
+              key={idx}
+              className={`col ${dir}`}
+              style={{ ['--dur' as any]: `${dur}s` }}
+            >
               <div className="stack">
                 {col.map((src, i) => (
-                  <figure key={i} className="card">
+                  <figure key={`${src}-${i}`} className="card">
                     <img src={src} alt="" loading="lazy" />
                   </figure>
                 ))}
@@ -54,7 +58,6 @@ export default function InfiniteGallery({
         <div className="fade fade-bottom" aria-hidden />
       </div>
 
-      {/* ✅ same button style as ContactUs */}
       <div className="wpforms-submit-container center">
         <button
           type="button"
@@ -71,6 +74,7 @@ export default function InfiniteGallery({
           color: #fff;
           padding: 150px 16px 80px;
           min-height: 100vh;
+          overflow: hidden;
         }
 
         .title {
@@ -81,12 +85,12 @@ export default function InfiniteGallery({
           color: #fff;
           margin-bottom: 10px;
         }
+
         .title span {
           color: #ffd700;
           font-family: 'Corinthia', serif;
           font-size: clamp(3rem, 8vw, 9rem);
           font-weight: 500;
-          // margin-left: -15px;
           margin-left: max(-16px, -2vw);
         }
 
@@ -95,11 +99,23 @@ export default function InfiniteGallery({
           max-width: 1100px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: repeat(5, 1fr);
+          grid-template-columns: repeat(5, minmax(0, 1fr));
           gap: 18px;
           padding: 6px;
-          -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
-          mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
+          -webkit-mask-image: linear-gradient(
+            to bottom,
+            transparent 0%,
+            #000 10%,
+            #000 90%,
+            transparent 100%
+          );
+          mask-image: linear-gradient(
+            to bottom,
+            transparent 0%,
+            #000 10%,
+            #000 90%,
+            transparent 100%
+          );
         }
 
         .col {
@@ -108,6 +124,7 @@ export default function InfiniteGallery({
           height: 800px;
           overflow: hidden;
           position: relative;
+          min-width: 0;
         }
 
         .stack {
@@ -117,10 +134,13 @@ export default function InfiniteGallery({
           animation-timing-function: linear;
           animation-iteration-count: infinite;
           animation-name: scrollUp;
+          will-change: transform;
         }
+
         .col.down .stack {
           animation-name: scrollDown;
         }
+
         .gallery:hover .stack {
           animation-play-state: paused;
         }
@@ -129,9 +149,12 @@ export default function InfiniteGallery({
           margin: 0;
           border-radius: 12px;
           background: #0b0b0b;
-          box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+          box-shadow:
+            0 10px 24px rgba(0, 0, 0, 0.45),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.06);
           overflow: hidden;
         }
+
         .card img {
           display: block;
           width: 100%;
@@ -148,21 +171,23 @@ export default function InfiniteGallery({
           height: 80px;
           z-index: 2;
         }
+
         .fade-top {
           top: 0;
           background: linear-gradient(to bottom, #000, transparent);
         }
+
         .fade-bottom {
           bottom: 0;
           background: linear-gradient(to top, #000, transparent);
         }
 
-        /* === Gold gradient Elementor button === */
         .wpforms-submit-container.center {
           display: flex;
           justify-content: center;
           margin-top: 40px;
         }
+
         .wpforms-submit {
           width: 160px;
           height: 44px;
@@ -189,6 +214,7 @@ export default function InfiniteGallery({
           transition: background-position 1s;
           overflow: hidden;
         }
+
         .wpforms-submit::before {
           position: absolute;
           content: attr(data-label);
@@ -204,27 +230,91 @@ export default function InfiniteGallery({
           background-position: left;
           transition: background-position 1s;
         }
+
         .wpforms-submit:hover {
           background-position: right;
         }
+
         .wpforms-submit:hover::before {
           background-position: right;
         }
 
         @keyframes scrollUp {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(-50%); }
-        }
-        @keyframes scrollDown {
-          0% { transform: translateY(-50%); }
-          100% { transform: translateY(0); }
+          0% {
+            transform: translateY(0);
+          }
+          100% {
+            transform: translateY(-50%);
+          }
         }
 
-        @media (max-width: 1100px) { .gallery { grid-template-columns: repeat(4, 1fr); } }
-        @media (max-width: 900px)  { .gallery { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 640px)  {
-          .gallery { grid-template-columns: repeat(2, 1fr); }
-          .col { height: 440px; }
+        @keyframes scrollDown {
+          0% {
+            transform: translateY(-50%);
+          }
+          100% {
+            transform: translateY(0);
+          }
+        }
+
+        @media (max-width: 1100px) {
+          .gallery {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+          }
+
+          .gallery .col:nth-child(5) {
+            display: none;
+          }
+        }
+
+        @media (max-width: 900px) {
+          .gallery {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+          }
+
+          .gallery .col:nth-child(4),
+          .gallery .col:nth-child(5) {
+            display: none;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .wrap {
+            padding: 120px 14px 60px;
+          }
+
+          .title {
+            font-size: 2.2rem;
+          }
+
+          .title span {
+            font-size: 4.5rem;
+          }
+
+          .gallery {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            padding: 0;
+          }
+
+          .gallery .col:nth-child(3),
+          .gallery .col:nth-child(4),
+          .gallery .col:nth-child(5) {
+            display: none;
+          }
+
+          .col {
+            height: 620px;
+            gap: 14px;
+          }
+
+          .stack {
+            gap: 14px;
+          }
+
+          .card {
+            border-radius: 14px;
+          }
         }
       `}</style>
     </section>

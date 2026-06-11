@@ -120,13 +120,22 @@ export default function FinaleCtaSection() {
           cursor: not-allowed;
         }
 
-        /* Mobile icons stack */
-        @media (max-width: 900px) {
-          section > div > div:first-child {
-            grid-auto-flow: row !important;
-            gap: 28px !important;
-          }
-        }
+        /* Mobile icons in 1 row */
+@media (max-width: 900px) {
+  section > div > div:first-child {
+    grid-auto-flow: column !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 14px !important;
+    width: 100%;
+  }
+
+  section > div > div:first-child img {
+    width: 88px !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
+  
       `}</style>
     </section>
   )

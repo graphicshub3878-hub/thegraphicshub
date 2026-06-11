@@ -348,16 +348,26 @@ export default function PricingSection() {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 12px;
+          gap: 14px;
           padding: 0 22px;
         }
 
         .pillIcon {
-          color: #ffd277;
-          font-weight: 800;
-          opacity: 0.95;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          min-width: 30px;
+          height: 30px;
+          border-radius: 999px;
+          color: #000;
+          background: #ffd277;
+          font-weight: 900;
+          opacity: 1;
           font-size: 18px;
           line-height: 1;
+          box-shadow: 0 0 18px rgba(255, 210, 119, 0.45);
+          flex-shrink: 0;
         }
 
         .pillText {
@@ -492,8 +502,9 @@ export default function PricingSection() {
           transform: translateX(-50%);
           display: inline-flex;
           align-items: center;
+          justify-content: center;
           gap: 8px;
-          padding: 8px 14px;
+          padding: 8px 16px;
           border-radius: 999px;
           background: #ffd700;
           color: #000;
@@ -501,10 +512,23 @@ export default function PricingSection() {
           font-size: 12px;
           box-shadow: 0 16px 40px rgba(255, 215, 0, 0.22);
           z-index: 3;
+          white-space: nowrap;
         }
 
         .spark {
-          font-size: 13px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 20px;
+          min-width: 20px;
+          height: 20px;
+          border-radius: 999px;
+          background: #000;
+          color: #ffd700;
+          font-size: 12px;
+          line-height: 1;
+          box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+          flex-shrink: 0;
         }
 
         .cardHead {
@@ -709,6 +733,17 @@ export default function PricingSection() {
             width: 66px;
           }
 
+          .pillInner {
+            gap: 12px;
+          }
+
+          .pillIcon {
+            width: 28px;
+            min-width: 28px;
+            height: 28px;
+            font-size: 17px;
+          }
+
           .pillText {
             font-size: 14px;
           }
@@ -729,6 +764,18 @@ export default function PricingSection() {
           .highlighted,
           .highlighted::after {
             border-radius: 16px;
+          }
+
+          .badge {
+            gap: 7px;
+            padding: 8px 14px;
+          }
+
+          .spark {
+            width: 18px;
+            min-width: 18px;
+            height: 18px;
+            font-size: 11px;
           }
 
           .price {
