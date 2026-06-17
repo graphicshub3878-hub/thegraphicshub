@@ -8,7 +8,7 @@ const FRAME_FOLDER = '/assets/videos/heroanim'
 const TOTAL_FRAMES = 121
 
 const getFrame = (index: number) => {
-  return `${FRAME_FOLDER}/${String(index).padStart(4, '0')}.png`
+  return `${FRAME_FOLDER}/${String(index).padStart(4, '0')}.webp`
 }
 
 const HomeHero = () => {
@@ -19,6 +19,7 @@ const HomeHero = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const imagesRef = useRef<HTMLImageElement[]>([])
   const frameRef = useRef({ frame: 0 })
+  const lastImageRef = useRef<HTMLImageElement | null>(null)
 
   useEffect(() => {
     const checkScreen = () => {
@@ -58,8 +59,17 @@ const HomeHero = () => {
     if (!ctx) return
 
     const render = () => {
-      const img = imagesRef.current[Math.round(frameRef.current.frame)]
+      const currentIndex = Math.round(frameRef.current.frame)
+      const currentImg = imagesRef.current[currentIndex]
+
+      const img =
+        currentImg && currentImg.complete && currentImg.naturalWidth
+          ? currentImg
+          : lastImageRef.current
+
       if (!img) return
+
+      lastImageRef.current = img
 
       const vw = window.innerWidth
       const vh = window.innerHeight
@@ -97,20 +107,43 @@ const HomeHero = () => {
       render()
     }
 
-    imagesRef.current = []
+    imagesRef.current = new Array(TOTAL_FRAMES)
 
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+    const loadFrame = (frameNumber: number) => {
+      const index = frameNumber - 1
+
+      if (imagesRef.current[index]) return
+
       const img = new Image()
-      img.src = getFrame(i)
-      imagesRef.current.push(img)
+      img.src = getFrame(frameNumber)
+      imagesRef.current[index] = img
 
-      if (i === 1) {
-        img.onload = () => {
+      img.onload = () => {
+        if (frameNumber === 1) {
+          lastImageRef.current = img
           setCanvasSize()
           render()
         }
       }
     }
+
+    const idle =
+      window.requestIdleCallback ||
+      function (cb: IdleRequestCallback) {
+        return window.setTimeout(cb, 1)
+      }
+
+    loadFrame(1)
+
+    for (let i = 2; i <= 20; i++) {
+      loadFrame(i)
+    }
+
+    idle(() => {
+      for (let i = 21; i <= TOTAL_FRAMES; i++) {
+        loadFrame(i)
+      }
+    })
 
     const tween = gsap.to(frameRef.current, {
       frame: TOTAL_FRAMES - 1,
