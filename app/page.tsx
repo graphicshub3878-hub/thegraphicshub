@@ -5,11 +5,13 @@ import WondersSection from './sections/WondersSection'
 import PraiseSection from './sections/PraiseSection'
 import MysticPortal from './sections/MysticPortal'
 import Footer from './components/footer'
+import ImageSequenceCanvas from './sections/ScrollHero'
 
 export default function Home() {
   return (
     <main>
       <Header/>
+      {/* <ImageSequenceCanvas/> */}
       <HomeHero />
       <NarrativeSection/>
       <WondersSection/>
